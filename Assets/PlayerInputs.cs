@@ -9,6 +9,7 @@ using UnityEngine.InputSystem.Utilities;
 public class @PlayerInputs : IInputActionCollection, IDisposable
 {
     public InputActionAsset asset { get; }
+
     public @PlayerInputs()
     {
         asset = InputActionAsset.FromJson(@"{
@@ -883,18 +884,42 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
+
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
-        public PlayerActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+
+        public PlayerActions(@PlayerInputs wrapper)
+        {
+            m_Wrapper = wrapper;
+        }
+
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
+
+        public InputActionMap Get()
+        {
+            return m_Wrapper.m_Player;
+        }
+
+        public void Enable()
+        {
+            Get().Enable();
+        }
+
+        public void Disable()
+        {
+            Get().Disable();
+        }
+
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+
+        public static implicit operator InputActionMap(PlayerActions set)
+        {
+            return set.Get();
+        }
+
         public void SetCallbacks(IPlayerActions instance)
         {
             if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
@@ -909,6 +934,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
             }
+
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
@@ -924,6 +950,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
             }
         }
     }
+
     public PlayerActions @Player => new PlayerActions(this);
 
     // UI
@@ -939,10 +966,16 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
+
     public struct UIActions
     {
         private @PlayerInputs m_Wrapper;
-        public UIActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+
+        public UIActions(@PlayerInputs wrapper)
+        {
+            m_Wrapper = wrapper;
+        }
+
         public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
         public InputAction @Submit => m_Wrapper.m_UI_Submit;
         public InputAction @Cancel => m_Wrapper.m_UI_Cancel;
@@ -953,11 +986,29 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
-        public InputActionMap Get() { return m_Wrapper.m_UI; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
+
+        public InputActionMap Get()
+        {
+            return m_Wrapper.m_UI;
+        }
+
+        public void Enable()
+        {
+            Get().Enable();
+        }
+
+        public void Disable()
+        {
+            Get().Disable();
+        }
+
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+
+        public static implicit operator InputActionMap(UIActions set)
+        {
+            return set.Get();
+        }
+
         public void SetCallbacks(IUIActions instance)
         {
             if (m_Wrapper.m_UIActionsCallbackInterface != null)
@@ -990,9 +1041,11 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @TrackedDevicePosition.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDevicePosition;
                 @TrackedDevicePosition.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDevicePosition;
                 @TrackedDeviceOrientation.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
-                @TrackedDeviceOrientation.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
+                @TrackedDeviceOrientation.performed -=
+                    m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
             }
+
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
             {
@@ -1029,17 +1082,22 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
             }
         }
     }
+
     public UIActions @UI => new UIActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
+
     public InputControlScheme KeyboardMouseScheme
     {
         get
         {
-            if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("Keyboard&Mouse");
+            if (m_KeyboardMouseSchemeIndex == -1)
+                m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("Keyboard&Mouse");
             return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
         }
     }
+
     private int m_GamepadSchemeIndex = -1;
+
     public InputControlScheme GamepadScheme
     {
         get
@@ -1048,7 +1106,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
             return asset.controlSchemes[m_GamepadSchemeIndex];
         }
     }
+
     private int m_TouchSchemeIndex = -1;
+
     public InputControlScheme TouchScheme
     {
         get
@@ -1057,7 +1117,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
             return asset.controlSchemes[m_TouchSchemeIndex];
         }
     }
+
     private int m_JoystickSchemeIndex = -1;
+
     public InputControlScheme JoystickScheme
     {
         get
@@ -1066,7 +1128,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
             return asset.controlSchemes[m_JoystickSchemeIndex];
         }
     }
+
     private int m_XRSchemeIndex = -1;
+
     public InputControlScheme XRScheme
     {
         get
@@ -1075,12 +1139,14 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
             return asset.controlSchemes[m_XRSchemeIndex];
         }
     }
+
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
     }
+
     public interface IUIActions
     {
         void OnNavigate(InputAction.CallbackContext context);
