@@ -45,3 +45,11 @@ The following packages were added:
   com.unity.timeline@1.6.0-pre.1
   com.unity.ugui@1.0.0
   com.unity.visualscripting@1.5.1-pre.5
+
+=== Sun Feb 28 04:16:03 2021
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.ide.visualstudio from version 2.0.5 to 2.0.7
